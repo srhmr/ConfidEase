@@ -1,16 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:confidease/userdata.dart';
+import 'package:confidease/pages/dashboard.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _login() {
+    if (_emailController.text == UserData.email &&
+        _passwordController.text == UserData.password) {
+      // Redirect to dashboard with user's full name
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Dashboard(
+            name: "${UserData.firstName} ${UserData.lastName}",
+          ),
+        ),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Invalid email or password")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: primary,
-             appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: primary,
         elevation: 0,
         leading: Padding(
@@ -19,12 +49,12 @@ class LoginPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: details,
               shape: BoxShape.circle,
-              border: Border.all(color: Color(0xFF000000), width: 1),
+              border: Border.all(color: const Color(0xFF000000), width: 1),
             ),
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back,
-                color:Color(0xFF000000),
+                color: Color(0xFF000000),
                 size: 20,
               ),
               onPressed: () {
@@ -44,15 +74,11 @@ class LoginPage extends StatelessWidget {
               Container(
                 width: 400,
                 height: 150,
-                margin: EdgeInsets.only(top: 40, bottom: 10),
-                // padding: EdgeInsets.all(10),
-                child: Image(image: AssetImage('images/soundwave1.png')),
+                margin: const EdgeInsets.only(top: 40, bottom: 10),
+                child: const Image(image: AssetImage('images/soundwave1.png')),
               ),
-
               Container(
-                margin: EdgeInsets.only(left: 50, right: 50),
-                // padding: EdgeInsets.only(left: 20, right: 20),
-                // color: Colors.white,
+                margin: const EdgeInsets.symmetric(horizontal: 50),
                 width: 350,
                 child: Text(
                   "WELCOME BACK",
@@ -64,86 +90,93 @@ class LoginPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-
               Container(
-                margin: EdgeInsets.only(left: 50, right: 50),
+                margin: const EdgeInsets.symmetric(horizontal: 50),
                 width: 350,
                 child: Text(
                   "Login to your account",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                  textAlign: TextAlign.center,
+                  style: GoogleFonts.sofiaSans(
+                    fontWeight: FontWeight.w400,
+                    color: quartenary, 
+                    fontSize: 12,),
+                    textAlign: TextAlign.center,
                 ),
               ),
-
+              // Email
               Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: const EdgeInsets.only(top: 50),
                 width: 300,
-                child: Text(
+                child:  Text(
                   "Email Address",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: GoogleFonts.sofiaSans(
+                    fontWeight: FontWeight.w700,
+                    color: quartenary,
+                    fontSize: 12,),
+   
+
                 ),
               ),
-
-            //TEXT FIELD
               Container(
                 width: 300,
                 height: 40,
-                margin: EdgeInsets.only(top: 5),
+                margin: const EdgeInsets.only(top: 5),
                 child: TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: quartenary,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: const Color(0xFFFFC419), width: 2),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFFFC419), width: 2),
                     ),
                   ),
-                ),
-              ),
-
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                width: 300,
-                child: Text(
-                  "Password",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ),
               
-              //TEXT FIELD
+              // Password
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: 300,
+                child: Text(
+                  "Password",
+                  style: GoogleFonts.sofiaSans(
+                    color: quartenary, 
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+
+                  ),
+                ),
+              ),
               Container(
                 width: 300,
                 height: 40,
-                margin: EdgeInsets.only(top: 5, bottom: 25),
+                margin: const EdgeInsets.only(top: 5, bottom: 25),
                 child: TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: quartenary,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: const Color(0xFFFFC419), width: 2),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFFFC419), width: 2),
                     ),
                   ),
                 ),
               ),
-
+              
+              // Login Button
               Container(
-                width: 100,
-                height: 50,
-                margin: EdgeInsets.only(bottom: 25),
+                width: 114,
+                height: 45,
+                margin: const EdgeInsets.only(top: 20),
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Login()),
-                    // );
-                  },
+                  onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                    side: BorderSide(color: Colors.black, width: 1),
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    side: const BorderSide(color: Colors.black, width: 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
@@ -153,8 +186,8 @@ class LoginPage extends StatelessWidget {
                     "Login",
                     style: GoogleFonts.sora(
                       color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
                     ),
                   ),
                 ),

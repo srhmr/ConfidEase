@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:confidease/pages/login.dart';
-import 'package:confidease/pages/signup.dart';
 import 'package:confidease/styles/colors.dart';
+
+// import 'package:confidease/pages/login.dart';
+// import 'package:confidease/pages/signup.dart';
+// import 'package:confidease/pages/dashboard.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -12,13 +14,14 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
 
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
 
         children: [
           Container(
             width: 300,
             height: 300,
-            margin: EdgeInsets.only(right: 50, left: 50, bottom: 50, top: 120),
+            margin: EdgeInsets.only(right: 50, left: 50, bottom: 80, top: 40),
 
             child: Image(image: AssetImage('images/chosen1.png')),
           ),
@@ -29,10 +32,7 @@ class LandingPage extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 25),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+                Navigator.pushNamed(context, '/login');
               },
               style: ElevatedButton.styleFrom(
                 side: BorderSide(color: Colors.black, width: 1),
@@ -58,11 +58,7 @@ class LandingPage extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 25),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    // para clickable yung button
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignupPage()),
-                );
+                Navigator.pushNamed(context, '/signup');
               },
               style: ElevatedButton.styleFrom(
                 side: BorderSide(color: Colors.black, width: 1),
@@ -75,7 +71,7 @@ class LandingPage extends StatelessWidget {
                 'Sign Up',
                 style: GoogleFonts.sora(
                   fontSize: 20,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w600,
                   color: details,
                 ),
               ),
@@ -87,3 +83,4 @@ class LandingPage extends StatelessWidget {
     );
   }
 }
+

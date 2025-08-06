@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:confidease/pages/landing.dart';
+import 'package:confidease/pages/login.dart';
+import 'package:confidease/pages/signup.dart';
+import 'package:confidease/pages/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, 
-      home: LandingPage()
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/landing',
+      routes: {
+        '/landing': (context) => const LandingPage(),
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
+        '/dashboard': (context) {
+          final name = ModalRoute.of(context)!.settings.arguments as String;
+          return Dashboard(name: name);
+        },
+      },
     );
   }
 }
