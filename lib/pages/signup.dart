@@ -7,11 +7,11 @@ class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupState(); //generic type
+  State<SignupPage> createState() => _SignupState(); 
 }
 
 class _SignupState extends State<SignupPage> {
-  //for inputs
+  // inputs
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -174,7 +174,7 @@ class _SignupState extends State<SignupPage> {
                     //to redirect to landing
                     Navigator.pushReplacementNamed(context, '/login');
 
-                    // Sign up logic here
+                    // Sign up logic 
                   },
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(

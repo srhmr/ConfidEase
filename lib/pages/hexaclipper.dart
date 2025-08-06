@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 Path createHexagonPath(Size size) {
   const int sides = 6;
   final double minDimension = size.width < size.height ? size.width : size.height;
-  final double radius = minDimension / 2; // sakto kahit rectangular
+  final double radius = minDimension / 2; 
   final Offset center = Offset(size.width / 2, size.height / 2);
 
   final path = Path();
   var angle = (pi * 2) / sides;
 
   Offset firstPoint = Offset(
-    radius * cos(-pi / 2), // start sa taas para upright
+    radius * cos(-pi / 2), 
     radius * sin(-pi / 2),
   );
   path.moveTo(firstPoint.dx + center.dx, firstPoint.dy + center.dy);

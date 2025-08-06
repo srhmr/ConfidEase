@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      // Show error message
+      // error message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Invalid email or password")),
       );

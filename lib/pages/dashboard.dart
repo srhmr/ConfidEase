@@ -12,7 +12,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<Dashboard> {
-  // Avatar options (pwede palitan ng asset images or network images)
+  // Avatar options (temporary muna kasi wala pang avatar)
   final List<IconData> avatarOptions = [
     Icons.person,
     Icons.face,
@@ -24,33 +24,31 @@ class _DashboardPageState extends State<Dashboard> {
   int selectedAvatarIndex = 0; // Current selected avatar
 
   //Dynamic data for the user
-  int challengesCompleted = 0; // para sa "You did"
-  String userLevel = "Beginner"; // para sa Level
-  int xpPoints = 0; // para sa XP Points
-  double progress = 0.0; // para sa progress bar (0.0 to 1.0)
+  int challengesCompleted = 0;
+  String userLevel = "Beginner"; 
+  int xpPoints = 0; 
+  double progress = 0.0; 
 
   @override
   void initState() {
     super.initState();
 
-    // Default (bagong user, walang progress)
     challengesCompleted = 0;
     userLevel = "Beginner";
     xpPoints = 0;
     progress = 0.0;
   }
 
-  int selectedIndex = 0; // Pang-track ng alin ang selected
+  int selectedIndex = 0; // Pang-track if alin ang selected
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Existing Body Code
       body: Stack(
         children: [
           // AppBar-like top area
           Container(
-            height: 150, // taas ng appbar area
+            height: 150, 
             color: primary,
             padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 30),
             child: Row(
@@ -80,20 +78,20 @@ class _DashboardPageState extends State<Dashboard> {
             ),
           ),
 
-          // White body container na naka-overlay sa ilalim ng "AppBar"
+          // Overlay container
           Container(
             margin: EdgeInsets.only(
               top: 120,
-            ), // Ginawang overlay ang container sa ilalim ng appbar
+            ), 
             decoration: BoxDecoration(
-              color: Colors.white, // Pinalitan ang kulay ng puti para lumutang
+              color: Colors.white, 
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), // Rounded top left
-                topRight: Radius.circular(30), // Rounded top right
+                topLeft: Radius.circular(30), 
+                topRight: Radius.circular(30),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black12, // May shadow para may depth
+                  color: Colors.black12, 
                   blurRadius: 10,
                   offset: Offset(0, -5),
                 ),
@@ -161,7 +159,7 @@ class _DashboardPageState extends State<Dashboard> {
                             ),
                             padding: EdgeInsets.only(
                               left: 12,
-                            ), // para di dikit sa gilid
+                            ), 
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +175,7 @@ class _DashboardPageState extends State<Dashboard> {
 
                                 SizedBox(height: 6),
 
-                                //Level ni User logic
+                                //Level of User logic
                                 Text(
                                   userLevel,
                                   style: GoogleFonts.sora(
@@ -200,7 +198,7 @@ class _DashboardPageState extends State<Dashboard> {
                             ),
                             padding: EdgeInsets.only(
                               left: 12,
-                            ), // para di dikit sa gilid
+                            ), 
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +214,6 @@ class _DashboardPageState extends State<Dashboard> {
 
                                 SizedBox(height: 6),
 
-                                //points ni user
                                 Text(
                                   '$xpPoints',
                                   style: GoogleFonts.sora(
@@ -257,7 +254,7 @@ class _DashboardPageState extends State<Dashboard> {
                   ),
                   child: Stack(
                     children: [
-                      //progress ni user logic
+                      //progress of user logic
                       FractionallySizedBox(
                         widthFactor: progress,
                         child: Container(
@@ -317,20 +314,20 @@ class _DashboardPageState extends State<Dashboard> {
                 ),
                 SizedBox(height: 12),
 
-                // Scrollable Badges Row
+                // Badges Row
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: List.generate(8, (index) {
-                      // pwede mong dagdagan count
+                      
                       return Container(
                         margin: EdgeInsets.only(right: 10),
                         child: HexagonBorder(
                           width: 100,
                           height: 100,
-                          fillColor: secondary, // kulay ng hexagon
-                          borderColor: Color(0xFF000000), // black border
-                          borderWidth: 1, // kapal
+                          fillColor: secondary, 
+                          borderColor: Color(0xFF000000), 
+                          borderWidth: 1, 
                         ),
                       );
                     }),
@@ -339,7 +336,7 @@ class _DashboardPageState extends State<Dashboard> {
 
                 SizedBox(height: 20),
 
-                // === Locked Badges Section ===
+                // Locked Badges Section 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -363,7 +360,7 @@ class _DashboardPageState extends State<Dashboard> {
                 ),
                 SizedBox(height: 12),
 
-                // Scrollable Locked Badges Row
+                // Locked Badges Row
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -373,9 +370,9 @@ class _DashboardPageState extends State<Dashboard> {
                         child: HexagonBorder(
                           width: 100,
                           height: 100,
-                          fillColor: Color(0xFFD0D0E8), // kulay ng hexagon
-                          borderColor: Color(0xFF000000), // black border
-                          borderWidth: 1, // kapal
+                          fillColor: Color(0xFFD0D0E8), 
+                          borderColor: Color(0xFF000000), 
+                          borderWidth: 1, 
                         ),
                       );
                     }),
@@ -418,17 +415,18 @@ class _DashboardPageState extends State<Dashboard> {
                     Icons.settings, //profile settings
                   ];
 
+                  // for update selected icon (selected index)
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedIndex = index; //Update selected icon
+                        selectedIndex = index; 
                       });
                     },
                     child: Container(
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: selectedIndex == index
-                            ? secondary //bg highlight
+                            ? secondary 
                             : Colors.transparent,
                         border: selectedIndex == index
                             ? Border.all(color: details, width: 2)
@@ -447,7 +445,7 @@ class _DashboardPageState extends State<Dashboard> {
     );
   }
 
-  // Modal bottom sheet na nagpapakita ng avatar options
+  // Avatar options
   void _showAvatarOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -487,7 +485,7 @@ class _DashboardPageState extends State<Dashboard> {
                         setState(() {
                           selectedAvatarIndex = index;
                         });
-                        Navigator.pop(context); // close modal
+                        Navigator.pop(context); 
                       },
                       child: CircleAvatar(
                         radius: isSelected ? 36 : 28,
