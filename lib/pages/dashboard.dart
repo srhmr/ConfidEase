@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:confidease/pages/hexaclipper.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 class Dashboard extends StatefulWidget {
   final String name;
@@ -44,6 +45,7 @@ class _DashboardPageState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: Stack(
         children: [
           // AppBar-like top area
@@ -391,7 +393,7 @@ class _DashboardPageState extends State<Dashboard> {
             left: 0,
             right: 0,
             child: Container(
-              height: 77,
+              height: 80,
               decoration: BoxDecoration(
                 color: primary,
                 borderRadius: BorderRadius.only(
@@ -412,11 +414,11 @@ class _DashboardPageState extends State<Dashboard> {
                 children: List.generate(5, (index) {
                   //List of ICONS
                   List<IconData> icons = [
-                    Icons.dashboard,
-                    Icons.book, //learners corner
-                    Icons.flag, //challenge course (papalitan pa icon)
-                    Icons.person, //profile (papalitan pa icon)
-                    Icons.settings, //profile settings
+                    TablerIcons.layout_dashboard,
+                    TablerIcons.book_2,
+                    TablerIcons.target_arrow,
+                    TablerIcons.chart_bar,
+                    TablerIcons.settings,
                   ];
 
                   // for update selected icon (selected index)
