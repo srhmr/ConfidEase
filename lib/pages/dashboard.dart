@@ -79,306 +79,310 @@ class _DashboardPageState extends State<Dashboard> {
           ),
 
           // Overlay container
-          Container(
-            margin: EdgeInsets.only(
-              top: 120,
-            ), 
-            decoration: BoxDecoration(
-              color: Colors.white, 
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), 
-                topRight: Radius.circular(30),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
+              margin: EdgeInsets.only(
+                top: 120,
+                bottom: 80,
+              ), 
+              decoration: BoxDecoration(
+                color: Colors.white, 
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), 
+                  topRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12, 
+                    blurRadius: 10,
+                    offset: Offset(0, -5),
+                  ),
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12, 
-                  blurRadius: 10,
-                  offset: Offset(0, -5),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //Challenges, Level, XP Points
-                Row(
-                  children: [
-                    // Challenges box (yellow)
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 157,
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Color(0xFF000000),
-                            width: 1,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'You did',
-                              style: GoogleFonts.sora(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF000000),
-                              ),
-                            ),
-
-                            // CHALLENGES OF USER
-                            Text(
-                              '$challengesCompleted Challenges',
-                              style: GoogleFonts.sora(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                                color: Color(0xFF000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 13),
-                    // Level & XP boxes
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 174,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFD0D0E8),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.only(
-                              left: 12,
-                            ), 
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Level',
-                                  style: GoogleFonts.sora(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Color(0xFF000000),
-                                  ),
-                                ),
-
-                                SizedBox(height: 6),
-
-                                //Level of User logic
-                                Text(
-                                  userLevel,
-                                  style: GoogleFonts.sora(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                    color: Color(0xFF000000),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 16),
-
-                          Container(
-                            width: 174,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFD0D0E8),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.only(
-                              left: 12,
-                            ), 
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'XP Points',
-                                  style: GoogleFonts.sora(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Color(0xFF000000),
-                                  ),
-                                ),
-
-                                SizedBox(height: 6),
-
-                                Text(
-                                  '$xpPoints',
-                                  style: GoogleFonts.sora(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                    color: Color(0xFF000000),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 20),
-
-                // Progress bar label
-                Text(
-                  'My Level Progress',
-                  style: GoogleFonts.sora(
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF000000),
-                    fontSize: 20,
-                  ),
-                ),
-
-                SizedBox(height: 8),
-
-                // Progress bar
-                Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey[100],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Stack(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Challenges, Level, XP Points
+                  Row(
                     children: [
-                      //progress of user logic
-                      FractionallySizedBox(
-                        widthFactor: progress,
+                      // Challenges box (yellow)
+                      Expanded(
+                        flex: 1,
                         child: Container(
+                          height: 157,
+                          padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: primary,
+                            color: Colors.amber,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                               color: Color(0xFF000000),
                               width: 1,
                             ),
                           ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'You did',
+                                style: GoogleFonts.sora(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFF000000),
+                                ),
+                              ),
+            
+                              // CHALLENGES OF USER
+                              Text(
+                                '$challengesCompleted Challenges',
+                                style: GoogleFonts.sora(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20,
+                                  color: Color(0xFF000000),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 12),
-                          child: Text(
-                            '${(progress * 100).toStringAsFixed(0)}%',
-                            //text percentage
-                            style: GoogleFonts.sora(
-                              color: const Color(0xFFD0D0E8),
-
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
+                      SizedBox(width: 13),
+                      // Level & XP boxes
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 174,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFD0D0E8),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.only(
+                                left: 12,
+                              ), 
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Level',
+                                    style: GoogleFonts.sora(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+            
+                                  SizedBox(height: 6),
+            
+                                  //Level of User logic
+                                  Text(
+                                    userLevel,
+                                    style: GoogleFonts.sora(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            SizedBox(height: 16),
+            
+                            Container(
+                              width: 174,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFD0D0E8),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.only(
+                                left: 12,
+                              ), 
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'XP Points',
+                                    style: GoogleFonts.sora(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+            
+                                  SizedBox(height: 6),
+            
+                                  Text(
+                                    '$xpPoints',
+                                    style: GoogleFonts.sora(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-
-                SizedBox(height: 30),
-
-                //Badges Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'My Badges',
-                      style: GoogleFonts.sora(
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF000000),
-                        fontSize: 20,
-                      ),
+            
+                  SizedBox(height: 20),
+            
+                  // Progress bar label
+                  Text(
+                    'My Level Progress',
+                    style: GoogleFonts.sora(
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF000000),
+                      fontSize: 20,
                     ),
-                    Text(
-                      "See All",
-                      style: GoogleFonts.sora(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 16,
-                        color: Color(0xFF000000),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-
-                // Badges Row
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(8, (index) {
-                      
-                      return Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: HexagonBorder(
-                          width: 100,
-                          height: 100,
-                          fillColor: secondary, 
-                          borderColor: Color(0xFF000000), 
-                          borderWidth: 1, 
-                        ),
-                      );
-                    }),
                   ),
-                ),
-
-                SizedBox(height: 20),
-
-                // Locked Badges Section 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Locked Badges",
-                      style: GoogleFonts.sora(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Color(0xFF000000),
-                      ),
+            
+                  SizedBox(height: 8),
+            
+                  // Progress bar
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    Text(
-                      "See All",
-                      style: GoogleFonts.sora(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 16,
-                        color: Color(0xFF000000),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-
-                // Locked Badges Row
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(8, (index) {
-                      return Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: HexagonBorder(
-                          width: 100,
-                          height: 100,
-                          fillColor: Color(0xFFD0D0E8), 
-                          borderColor: Color(0xFF000000), 
-                          borderWidth: 1, 
+                    child: Stack(
+                      children: [
+                        //progress of user logic
+                        FractionallySizedBox(
+                          widthFactor: progress,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: primary,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Color(0xFF000000),
+                                width: 1,
+                              ),
+                            ),
+                          ),
                         ),
-                      );
-                    }),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 12),
+                            child: Text(
+                              '${(progress * 100).toStringAsFixed(0)}%',
+                              //text percentage
+                              style: GoogleFonts.sora(
+                                color: const Color(0xFFD0D0E8),
+            
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+            
+                  SizedBox(height: 30),
+            
+                  //Badges Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'My Badges',
+                        style: GoogleFonts.sora(
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF000000),
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "See All",
+                        style: GoogleFonts.sora(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16,
+                          color: Color(0xFF000000),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+            
+                  // Badges Row
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(8, (index) {
+                        
+                        return Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: HexagonBorder(
+                            width: 100,
+                            height: 100,
+                            fillColor: secondary, 
+                            borderColor: Color(0xFF000000), 
+                            borderWidth: 1, 
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+            
+                  SizedBox(height: 20),
+            
+                  // Locked Badges Section 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Locked Badges",
+                        style: GoogleFonts.sora(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: Color(0xFF000000),
+                        ),
+                      ),
+                      Text(
+                        "See All",
+                        style: GoogleFonts.sora(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16,
+                          color: Color(0xFF000000),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+            
+                  // Locked Badges Row
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(8, (index) {
+                        return Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: HexagonBorder(
+                            width: 100,
+                            height: 100,
+                            fillColor: Color(0xFFD0D0E8), 
+                            borderColor: Color(0xFF000000), 
+                            borderWidth: 1, 
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           //BOTTOM NAVBAR

@@ -1,8 +1,11 @@
+import 'package:confidease/pages/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:confidease/userdata.dart';
 import 'package:confidease/pages/dashboard.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,9 +25,8 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Dashboard(
-            name: "${UserData.firstName} ${UserData.lastName}",
-          ),
+          builder: (context) =>
+              Dashboard(name: "${UserData.firstName} ${UserData.lastName}"),
         ),
       );
     } else {
@@ -97,23 +99,23 @@ class _LoginPageState extends State<LoginPage> {
                   "Login to your account",
                   style: GoogleFonts.sofiaSans(
                     fontWeight: FontWeight.w400,
-                    color: quartenary, 
-                    fontSize: 12,),
-                    textAlign: TextAlign.center,
+                    color: quartenary,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               // Email
               Container(
                 margin: const EdgeInsets.only(top: 50),
                 width: 300,
-                child:  Text(
+                child: Text(
                   "Email Address",
                   style: GoogleFonts.sofiaSans(
                     fontWeight: FontWeight.w700,
                     color: quartenary,
-                    fontSize: 12,),
-   
-
+                    fontSize: 12,
+                  ),
                 ),
               ),
               Container(
@@ -126,14 +128,19 @@ class _LoginPageState extends State<LoginPage> {
                     border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: quartenary,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                    ),
                     focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFFFC419), width: 2),
+                      borderSide: BorderSide(
+                        color: Color(0xFFFFC419),
+                        width: 2,
+                      ),
                     ),
                   ),
                 ),
               ),
-              
+
               // Password
               Container(
                 margin: const EdgeInsets.only(top: 10),
@@ -141,17 +148,16 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   "Password",
                   style: GoogleFonts.sofiaSans(
-                    color: quartenary, 
+                    color: quartenary,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
-
                   ),
                 ),
               ),
               Container(
                 width: 300,
                 height: 40,
-                margin: const EdgeInsets.only(top: 5, bottom: 25),
+                margin: const EdgeInsets.only(top: 5, bottom: 10),
                 child: TextField(
                   controller: _passwordController,
                   obscureText: true,
@@ -159,14 +165,45 @@ class _LoginPageState extends State<LoginPage> {
                     border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: quartenary,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                    ),
                     focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFFFC419), width: 2),
+                      borderSide: BorderSide(
+                        color: Color(0xFFFFC419),
+                        width: 2,
+                      ),
                     ),
                   ),
                 ),
               ),
-              
+
+              //Forgot password
+              Container(
+                width: 300,
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.only(bottom: 15),
+                child: GestureDetector(
+                  onTap: () {
+                    // to implement forgot pw logic
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResetPasswordPage(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Forgot Password?",
+                    style: GoogleFonts.sofiaSans(
+                      fontSize: 15,
+                      color: quartenary,
+                      //decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+
               // Login Button
               Container(
                 width: 114,
@@ -175,7 +212,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
+                    ),
                     side: const BorderSide(color: Colors.black, width: 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
