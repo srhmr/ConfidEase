@@ -59,7 +59,7 @@ class ResetPasswordPage extends StatelessWidget {
             SizedBox(height: 5),
 
             Text(
-              "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
+              "Enter your registered email for reset password instructions.",
               style: GoogleFonts.sofiaSans(
                 fontSize: 15,
                 color: Colors.black,

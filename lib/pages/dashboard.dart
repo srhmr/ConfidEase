@@ -315,7 +315,7 @@ class _DashboardPageState extends State<Dashboard> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
+                  SizedBox(height: 37),
             
                   // Badges Row
                   SingleChildScrollView(
