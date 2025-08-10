@@ -178,26 +178,47 @@ class _SignupState extends State<SignupPage> {
                       final email = _emailController.text.trim();
                       final firstName = _firstNameController.text.trim();
                       final lastName = _lastNameController.text.trim();
-                      final now = DateTime.now();
-                      final formattedDate = DateFormat('MMM d, yyyy').format(now);   
-                      final formattedTime = DateFormat('h:mm:ss a').format(now);     
 
+                      final now = DateTime.now();
+                      final formattedDate = DateFormat('MMM d, yyyy').format(now);
+                      final formattedTime = DateFormat('h:mm:ss a').format(now);
+                      final shortDate = DateFormat('MMddyy').format(now); // e.g. "081025"
+
+                      // Get initials (uppercase, safe-check in case user only typed 1 char)
+                      final firstInitial = firstName.isNotEmpty ? firstName[0].toUpperCase() : '';
+                      final lastInitial = lastName.isNotEmpty ? lastName[0].toUpperCase() : '';
+
+                      // Count how many users signed up today (to set the last number)
+                      final todayDocCount = await FirebaseFirestore.instance
+                          .collection('user')
+                          .where('joined_at.date', isEqualTo: formattedDate) // same readable date
+                          .count()
+                          .get();
+
+                      final signupNumber = (todayDocCount.count ?? 0) + 1; // next number for today
+
+                      // Create the user_id
+                      final userIdCustom = 'user-$shortDate-$firstInitial$lastInitial-$signupNumber';
+
+                      // Save to Firestore
                       await FirebaseFirestore.instance
-                          .collection('user')                          
-                          .doc(userCredential.user!.uid)               
+                          .collection('user')
+                          .doc(userCredential.user!.uid)
                           .set({
+                        'user_id': userIdCustom, // custom ID
                         'email': email,
                         'joined_at': {
-                          'timestamp': FieldValue.serverTimestamp(),  
-                          'date': formattedDate,                      
-                          'time': formattedTime,                     
+                          'timestamp': FieldValue.serverTimestamp(),
+                          'date': formattedDate,
+                          'time': formattedTime,
                         },
                         'user_fname': firstName,
                         'user_lname': lastName,
                         'user_xp': 1,
                         'level': 1,
-                        'user_bday': _dateController.text.trim(),    
+                        'user_bday': _dateController.text.trim(),
                       });
+
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Account created successfully!")),
