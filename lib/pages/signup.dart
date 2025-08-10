@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -128,14 +129,12 @@ class _SignupState extends State<SignupPage> {
                       firstDate: DateTime(1950),
                       lastDate: DateTime(2100),
                     );
-                    if (pickedDate != null) {
-                      setState(() {
-                        _dateController.text = "${pickedDate.toLocal()}".split(
-                          ' ',
-                        )[0];
-                      });
-                    }
-                  },
+                    setState(() {
+                      _dateController.text = pickedDate != null
+                        ? "${pickedDate.toLocal()}".split(' ')[0]
+                        : '';
+                    });
+                                    },
                 ),
               ),
               _buildLabel("Password", style: GoogleFonts.sofiaSans(fontWeight: FontWeight.w700, fontSize: 12, color: Color(0xFF000000))),
