@@ -13,387 +13,381 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<Dashboard> {
-  // Avatar options (temporary muna kasi wala pang avatar)
+  //pfp options
   final List<IconData> avatarOptions = [
     Icons.person,
+    Icons.face_sharp,
     Icons.face,
-    Icons.pets,
-    Icons.tag_faces,
     Icons.account_circle,
   ];
 
-  int selectedAvatarIndex = 0; // Current selected avatar
+  int selectedAvatarIndex = 0;
 
-  //Dynamic data for the user
+  //levels of challenges (Rookie, RisingStar, SportlightSeeker, VocalAce, CrowdCharmer, CertifiedOrator, MicMaster)
   int challengesCompleted = 0;
-  String userLevel = "Beginner"; 
-  int xpPoints = 0; 
-  double progress = 0.0; 
+  String userLevel = "";
+  int xpPoints = 0;
+  double progress = 0.0;
 
   @override
   void initState() {
     super.initState();
 
     challengesCompleted = 0;
-    userLevel = "Beginner";
+    userLevel = '';
     xpPoints = 0;
     progress = 0.0;
   }
 
-  int selectedIndex = 0; // Pang-track if alin ang selected
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
+      backgroundColor: primary,
       body: Stack(
         children: [
-          // AppBar-like top area
-          Container(
-            height: 150, 
-            color: primary,
-            padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 30),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => _showAvatarOptions(context),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: secondary,
-                    child: Icon(
-                      avatarOptions[selectedAvatarIndex],
-                      size: 36,
-                      color: quartenary,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 16),
-                Text(
-                  widget.name,
-                  style: GoogleFonts.sora(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
-                    color: quartenary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Overlay container
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-              margin: EdgeInsets.only(
-                top: 120,
-                bottom: 80,
-              ), 
-              decoration: BoxDecoration(
-                color: Colors.white, 
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), 
-                  topRight: Radius.circular(30),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12, 
-                    blurRadius: 10,
-                    offset: Offset(0, -5),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //Challenges, Level, XP Points
-                  Row(
-                    children: [
-                      // Challenges box (yellow)
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 157,
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Color(0xFF000000),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+          SafeArea(
+            //Body
+            child: Column(
+                  children: [
+                    SizedBox(height: 25),
+                    //circle avatar
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Column(
+                        children: [
+                          Row(
                             children: [
-                              Text(
-                                'You did',
-                                style: GoogleFonts.sora(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF000000),
+                              GestureDetector(
+                                onTap: () => _showAvatarOptions(context),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: secondary,
+                                  child: Icon(
+                                    avatarOptions[selectedAvatarIndex],
+                                    size: 30,
+                                    color: quartenary,
+                                  ),
                                 ),
                               ),
-            
-                              // CHALLENGES OF USER
+                              SizedBox(width: 16),
                               Text(
-                                '$challengesCompleted Challenges',
+                                widget.name,
+                                style: GoogleFonts.sora(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 24,
+                                  color: quartenary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        child: Container(
+                          color: quartenary,
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                //Challenges
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        //size of the box
+                                        width: 172,
+                                        child: Container(
+                                          height: 148,
+                                          padding: EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: secondary,
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: Color(0xFF000000),
+                                              width: 1,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'You did',
+                                                style: GoogleFonts.sora(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xFF000000),
+                                                ),
+                                              ),
+                                      
+                                              //User Challenges
+                                              Text(
+                                                '$challengesCompleted Challenges',
+                                                style: GoogleFonts.sora(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 20,
+                                                  color: Color(0xFF000000),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  
+                                  //Level
+                                  SizedBox(width: 13),
+                                  
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      children: [
+                                        SingleChildScrollView(
+                                          child: Container(
+                                            margin: EdgeInsets.only(bottom: 13),
+                                            width: 174,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFD0D0E8),
+                                              borderRadius: BorderRadius.circular(
+                                                8,
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.only(left: 12),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Level',
+                                                  style: GoogleFonts.sora(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12,
+                                                    color: Color(0xFF000000),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 6),
+                                                //level logic
+                                                Text(
+                                                  userLevel,
+                                                  style: GoogleFonts.sora(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 20,
+                                                    color: Color(0xFF000000),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                  
+                                        Container(
+                                          width: 174,
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFD0D0E8),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          padding: EdgeInsets.only(left: 12),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'XP Points',
+                                                style: GoogleFonts.sora(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12,
+                                                  color: Color(0xFF000000),
+                                                ),
+                                              ),
+                                              SizedBox(height: 6),
+                                  
+                                              Text(
+                                                '$xpPoints',
+                                                style: GoogleFonts.sora(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 20,
+                                                  color: Color(0xFF000000),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ], //dulo
+                                    ),
+                                  ),
+                                ],
+                              ),
+                                  
+                              SizedBox(height: 20),
+                              Text(
+                                'My Level Progress',
                                 style: GoogleFonts.sora(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 20,
                                   color: Color(0xFF000000),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 13),
-                      // Level & XP boxes
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 174,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFD0D0E8),
-                                borderRadius: BorderRadius.circular(8),
+                              SizedBox(height: 8),
+                              Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.blueGrey[100],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    //progress logic
+                                    FractionallySizedBox(
+                                      widthFactor: progress,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: primary,
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                            color: Color(0xFF000000),
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: EdgeInsetsGeometry.only(left: 12),
+                                        child: Text(
+                                          '${(progress * 100).toStringAsFixed(0)}%',
+                                          //text percentage
+                                          style: GoogleFonts.sora(
+                                            color: const Color(0xFFD0D0E8),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              padding: EdgeInsets.only(
-                                left: 12,
-                              ), 
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                  
+                              SizedBox(height: 30),
+                                  
+                              //Badges
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Level',
+                                    'My Badges',
                                     style: GoogleFonts.sora(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF000000),
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    "See All",
+                                    style: GoogleFonts.sora(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 16,
                                       color: Color(0xFF000000),
                                     ),
                                   ),
-            
-                                  SizedBox(height: 6),
-            
-                                  //Level of User logic
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: List.generate(8, (index) {
+                                    return Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: HexagonBorder(
+                                        width: 100,
+                                        height: 100,
+                                        fillColor: secondary,
+                                        borderColor: Color(0xFF000000),
+                                        borderWidth: 1,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              //Locked Badge
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
                                   Text(
-                                    userLevel,
+                                    'Locked Badges',
                                     style: GoogleFonts.sora(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 20,
                                       color: Color(0xFF000000),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 16),
-            
-                            Container(
-                              width: 174,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFD0D0E8),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: EdgeInsets.only(
-                                left: 12,
-                              ), 
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
                                   Text(
-                                    'XP Points',
+                                    'See All',
                                     style: GoogleFonts.sora(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: Color(0xFF000000),
-                                    ),
-                                  ),
-            
-                                  SizedBox(height: 6),
-            
-                                  Text(
-                                    '$xpPoints',
-                                    style: GoogleFonts.sora(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 16,
                                       color: Color(0xFF000000),
                                     ),
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 12),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: List.generate(8, (index) {
+                                    return Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: HexagonBorder(
+                                        width: 100,
+                                        height: 100,
+                                        fillColor: Color(0xFFD0D0E8),
+                                        borderColor: Color(0xFF000000),
+                                        borderWidth: 1,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ),                
+                                                          ],
+                                                        ),
                             ),
-                          ],
-                        ),
                       ),
-                    ],
-                  ),
-            
-                  SizedBox(height: 20),
-            
-                  // Progress bar label
-                  Text(
-                    'My Level Progress',
-                    style: GoogleFonts.sora(
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF000000),
-                      fontSize: 20,
                     ),
                   ),
-            
-                  SizedBox(height: 8),
-            
-                  // Progress bar
-                  Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey[100],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Stack(
-                      children: [
-                        //progress of user logic
-                        FractionallySizedBox(
-                          widthFactor: progress,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: primary,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Color(0xFF000000),
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 12),
-                            child: Text(
-                              '${(progress * 100).toStringAsFixed(0)}%',
-                              //text percentage
-                              style: GoogleFonts.sora(
-                                color: const Color(0xFFD0D0E8),
-            
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-            
-                  SizedBox(height: 30),
-            
-                  //Badges Section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'My Badges',
-                        style: GoogleFonts.sora(
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF000000),
-                          fontSize: 20,
-                        ),
-                      ),
-                      Text(
-                        "See All",
-                        style: GoogleFonts.sora(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 16,
-                          color: Color(0xFF000000),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 37),
-            
-                  // Badges Row
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(8, (index) {
-                        
-                        return Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: HexagonBorder(
-                            width: 100,
-                            height: 100,
-                            fillColor: secondary, 
-                            borderColor: Color(0xFF000000), 
-                            borderWidth: 1, 
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-            
-                  SizedBox(height: 20),
-            
-                  // Locked Badges Section 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Locked Badges",
-                        style: GoogleFonts.sora(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                          color: Color(0xFF000000),
-                        ),
-                      ),
-                      Text(
-                        "See All",
-                        style: GoogleFonts.sora(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 16,
-                          color: Color(0xFF000000),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 12),
-            
-                  // Locked Badges Row
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(8, (index) {
-                        return Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: HexagonBorder(
-                            width: 100,
-                            height: 100,
-                            fillColor: Color(0xFFD0D0E8), 
-                            borderColor: Color(0xFF000000), 
-                            borderWidth: 1, 
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                ),
+                SizedBox(height: 77),
+              ],
+            ), 
           ),
-          //BOTTOM NAVBAR
+
+          //Bottom Navbar
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Container(
-              height: 80,
+              height: 77,
               decoration: BoxDecoration(
                 color: primary,
                 borderRadius: BorderRadius.only(
@@ -425,21 +419,21 @@ class _DashboardPageState extends State<Dashboard> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedIndex = index; 
+                        selectedIndex = index;
                       });
                     },
                     child: Container(
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: selectedIndex == index
-                            ? secondary 
+                            ? secondary
                             : Colors.transparent,
                         border: selectedIndex == index
                             ? Border.all(color: details, width: 2)
                             : null,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(icons[index], size: 30, color: quartenary),
+                      child: Icon(icons[index], size: 40, color: quartenary),
                     ),
                   );
                 }),
@@ -491,7 +485,7 @@ class _DashboardPageState extends State<Dashboard> {
                         setState(() {
                           selectedAvatarIndex = index;
                         });
-                        Navigator.pop(context); 
+                        Navigator.pop(context); // close modal
                       },
                       child: CircleAvatar(
                         radius: isSelected ? 36 : 28,
@@ -515,3 +509,5 @@ class _DashboardPageState extends State<Dashboard> {
     );
   }
 }
+
+
