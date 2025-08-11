@@ -95,11 +95,12 @@ class _DashboardPageState extends State<Dashboard> {
                         ),
                         child: Container(
                           color: quartenary,
-                          child: Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: SingleChildScrollView(
+                          child: SingleChildScrollView( //to scroll
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                
                                 //Challenges
                                 children: [
                                   Row(
@@ -372,9 +373,9 @@ class _DashboardPageState extends State<Dashboard> {
                                                           ],
                                                         ),
                             ),
-                      ),
-                    ),
-                  ),
+                          ),
+                                          ),
+                                        ),
                 ),
                 SizedBox(height: 77),
               ],
