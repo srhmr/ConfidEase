@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:confidease/pages/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
@@ -18,24 +19,35 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
-    if (_emailController.text == UserData.email &&
-        _passwordController.text == UserData.password) {
-      // Redirect to dashboard with user's full name
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              Dashboard(name: "${UserData.firstName} ${UserData.lastName}"),
+  void _login() async {
+  try {
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    // If login successful → redirect to dashboard
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Dashboard(
+          name: credential.user?.email ?? "User",
         ),
-      );
-    } else {
-      // error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Invalid email or password")),
-      );
+      ),
+    );
+  } on FirebaseAuthException catch (e) {
+    String message = "Login failed";
+    if (e.code == 'user-not-found') {
+      message = "No user found for that email.";
+    } else if (e.code == 'wrong-password') {
+      message = "Wrong password provided.";
     }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

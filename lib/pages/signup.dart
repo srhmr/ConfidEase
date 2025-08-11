@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:confidease/userdata.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -128,14 +131,12 @@ class _SignupState extends State<SignupPage> {
                       firstDate: DateTime(1950),
                       lastDate: DateTime(2100),
                     );
-                    if (pickedDate != null) {
-                      setState(() {
-                        _dateController.text = "${pickedDate.toLocal()}".split(
-                          ' ',
-                        )[0];
-                      });
-                    }
-                  },
+                    setState(() {
+                      _dateController.text = pickedDate != null
+                        ? "${pickedDate.toLocal()}".split(' ')[0]
+                        : '';
+                    });
+                                    },
                 ),
               ),
               _buildLabel("Password", style: GoogleFonts.sofiaSans(fontWeight: FontWeight.w700, fontSize: 12, color: Color(0xFF000000))),
@@ -151,30 +152,84 @@ class _SignupState extends State<SignupPage> {
                 height: 45,
                 margin: const EdgeInsets.only(top: 25),
                 child: OutlinedButton(
-                  onPressed: () {
-                    if (_passwordController.text !=
-                        _confirmPasswordController.text) {
+                  onPressed: () async {
+                    if (_passwordController.text != _confirmPasswordController.text) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Passwords do not match")),
                       );
                       return;
                     }
-                    //save the users input to Userdata
-                    UserData.email = _emailController.text;
-                    UserData.firstName = _firstNameController.text;
-                    UserData.lastName = _lastNameController.text;
-                    UserData.password = _passwordController.text;
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Account created successfully!"),
-                      ),
-                    );
+                    if (_dateController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Please select your birthday")),
+                      );
+                      return;
+                    }
 
-                    //to redirect to landing
-                    Navigator.pushReplacementNamed(context, '/login');
+                    try {
+                      // Create user in Firebase Auth
+                      UserCredential userCredential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                      );
 
-                    // Sign up logic 
+                      final email = _emailController.text.trim();
+                      final firstName = _firstNameController.text.trim();
+                      final lastName = _lastNameController.text.trim();
+
+                      final now = DateTime.now();
+                      final formattedDate = DateFormat('MMM d, yyyy').format(now);
+                      final formattedTime = DateFormat('h:mm:ss a').format(now);
+                      final shortDate = DateFormat('MMddyy').format(now); // e.g. "081025"
+
+                      // Get initials (uppercase, safe-check in case user only typed 1 char)
+                      final firstInitial = firstName.isNotEmpty ? firstName[0].toUpperCase() : '';
+                      final lastInitial = lastName.isNotEmpty ? lastName[0].toUpperCase() : '';
+
+                      // Count how many users signed up today (to set the last number)
+                      final todayDocCount = await FirebaseFirestore.instance
+                          .collection('user')
+                          .where('joined_at.date', isEqualTo: formattedDate) // same readable date
+                          .count()
+                          .get();
+
+                      final signupNumber = (todayDocCount.count ?? 0) + 1; // next number for today
+
+                      // Create the user_id
+                      final userIdCustom = 'user-$shortDate-$firstInitial$lastInitial-$signupNumber';
+
+                      // Save to Firestore
+                      await FirebaseFirestore.instance
+                          .collection('user')
+                          .doc(userCredential.user!.uid)
+                          .set({
+                        'user_id': userIdCustom, // custom ID
+                        'email': email,
+                        'joined_at': {
+                          'timestamp': FieldValue.serverTimestamp(),
+                          'date': formattedDate,
+                          'time': formattedTime,
+                        },
+                        'user_fname': firstName,
+                        'user_lname': lastName,
+                        'user_xp': 1,
+                        'level': 1,
+                        'user_bday': _dateController.text.trim(),
+                      });
+
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Account created successfully!")),
+                      );
+
+                      Navigator.pushReplacementNamed(context, '/login');
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Error: $e")),
+                      );
+                    }
                   },
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -238,5 +293,6 @@ class _SignupState extends State<SignupPage> {
         ),
       ),
     );
+    
   }
 }
