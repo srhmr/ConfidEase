@@ -6,7 +6,7 @@ import 'pages/screens/first.dart';
 import 'pages/screens/second.dart';
 import 'pages/screens/challenge.dart'; ///challenge
 import 'pages/screens/fourth.dart';
-import 'pages/screens/fifth.dart';
+import 'pages/screens/profile.dart';
 
 class MainNavigator extends StatefulWidget {
   final String name;
@@ -29,7 +29,7 @@ class _MainNavigatorState extends State<MainNavigator> {
       SecondScreen(),  //learners corner
       Challenge(),  //challenge
       FourthScreen(),  //progress
-      FifthScreen(),  //profile settings
+      Profile(name: widget.name),  //profile settings
     ];
   }
 

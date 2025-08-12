@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         '/landing': (context) => const LandingPage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
-        '/switcher': (context) {
+        '/navigator': (context) {
           final name = ModalRoute.of(context)!.settings.arguments as String;
           return MainNavigator(name: name);
         },
