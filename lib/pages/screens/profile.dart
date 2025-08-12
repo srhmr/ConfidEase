@@ -1,8 +1,8 @@
+import 'package:confidease/pages/edit_profile.dart';
+import 'package:confidease/pages/set_reminder.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:google_fonts/google_fonts.dart';
-//import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -88,6 +88,10 @@ class _ProfileState extends State<Profile> {
               trailing: Icon(TablerIcons.chevron_right, size: 25),
               onTap: () {
                 //navigate
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const EditProfile()),
+                );
               },
             ),
             ListTile(
@@ -138,6 +142,10 @@ class _ProfileState extends State<Profile> {
               trailing: Icon(TablerIcons.chevron_right, size: 25),
               onTap: () {
                 //navigate
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SetReminder()),
+                );
               },
             ),
             SwitchListTile(
@@ -181,23 +189,23 @@ class _ProfileState extends State<Profile> {
               },
             ),
             SizedBox(height: 20),
-           
-           //Logout Button
-           ListTile(
+
+            //Logout Button
+            ListTile(
               contentPadding: EdgeInsets.only(left: 6, right: 30),
               leading: Icon(TablerIcons.logout, size: 30, color: logout),
               title: Text(
                 'Log Out',
-                style: GoogleFonts.sora(fontWeight: FontWeight.w600, color: logout),
+                style: GoogleFonts.sora(
+                  fontWeight: FontWeight.w600,
+                  color: logout,
+                ),
               ),
               trailing: Icon(TablerIcons.chevron_right, size: 25),
               onTap: () {
                 //navigate
               },
-            ), 
-
-
-            
+            ),
           ],
         ),
       ),
