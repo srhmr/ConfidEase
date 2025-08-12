@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //screens
 import 'pages/screens/first.dart';
 import 'pages/screens/second.dart';
-import 'pages/screens/third.dart';
+import 'pages/screens/challenge.dart'; ///challenge
 import 'pages/screens/fourth.dart';
 import 'pages/screens/fifth.dart';
 
@@ -27,11 +27,12 @@ class _MainNavigatorState extends State<MainNavigator> {
     _screens = [
       FirstScreen(name: widget.name),  //dashboard
       SecondScreen(),  //learners corner
-      ThirdScreen(),  //challenge
+      Challenge(),  //challenge
       FourthScreen(),  //progress
       FifthScreen(),  //profile settings
     ];
   }
+
   
   void _onItemTapped(int index) {
     setState(() {
