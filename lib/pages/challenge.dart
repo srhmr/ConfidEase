@@ -188,9 +188,6 @@ class _ChallengeState extends State<Challenge> {
                     //Speech Topic or Concept
                     Container(
                       height: 25,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
                       margin: const EdgeInsets.only(
                         left: 20,
                         right: 20,
@@ -230,9 +227,6 @@ class _ChallengeState extends State<Challenge> {
                     // Delivery Goal
                     Container(
                       height: 25,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
                       margin: EdgeInsets.only(left: 20, top: 10),
                       child: Text(
                         "Delivery Goal",
