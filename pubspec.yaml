@@ -71,6 +71,7 @@ flutter:
     - images/chosen2.png
     - images/soundwave1.png
     - images/soundwave2.png
+    - images/mic-hand.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

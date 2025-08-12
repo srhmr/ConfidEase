@@ -5,3 +5,4 @@ const Color secondary = Color(0xffF7C020);
 const Color tertiary = Color(0xffFFF7D0);
 const Color quartenary = Color(0xffF4f4f4);
 const Color details = Color(0xff4D4299);
+const Color lightviolet = Color(0xffD0D0E8);
