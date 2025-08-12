@@ -1,10 +1,10 @@
+import 'package:confidease/navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:confidease/pages/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:confidease/userdata.dart';
-import 'package:confidease/pages/dashboard.dart';
+
 
 
 
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => Dashboard(
+        builder: (context) => MainNavigator(
           name: credential.user?.email ?? "User",
         ),
       ),

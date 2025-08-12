@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
 import 'firebase_options.dart';
+
 import 'package:confidease/pages/landing.dart';
 import 'package:confidease/pages/login.dart';
 import 'package:confidease/pages/signup.dart';
-import 'package:confidease/pages/dashboard.dart';
+
+import 'package:confidease/navigator.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +29,9 @@ class MyApp extends StatelessWidget {
         '/landing': (context) => const LandingPage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
-        '/dashboard': (context) {
+        '/switcher': (context) {
           final name = ModalRoute.of(context)!.settings.arguments as String;
-          return Dashboard(name: name);
+          return MainNavigator(name: name);
         },
       },
     );
