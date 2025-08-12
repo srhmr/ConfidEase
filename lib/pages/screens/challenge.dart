@@ -1,7 +1,7 @@
+import 'package:confidease/pages/screens/upload_script.dart';
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 class Challenge extends StatefulWidget {
   const Challenge({super.key});
@@ -11,6 +11,25 @@ class Challenge extends StatefulWidget {
 }
 
 class _ChallengeState extends State<Challenge> {
+  String _selectedButton = '';
+
+  Widget buildImageButton(
+    String normalImage,
+    String selectedImage,
+    String buttonName,
+  ) {
+    bool isSelected = _selectedButton == buttonName;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedButton = buttonName;
+        });
+      },
+      child: Image.asset(isSelected ? selectedImage : normalImage, height: 100),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //whole page
@@ -21,7 +40,7 @@ class _ChallengeState extends State<Challenge> {
           Container(
             padding: const EdgeInsets.only(top: 15, left: 15),
 
-            height: 170,
+            height: 150,
             width: double.infinity,
             color: tertiary,
             child: Row(
@@ -89,34 +108,25 @@ class _ChallengeState extends State<Challenge> {
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: tertiary,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 50,
-            width: double.infinity,
-            //color: tertiary, //problem
-            child: IconButton(
-              icon: Icon(TablerIcons.arrow_left, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
 
           // Body
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  margin: const EdgeInsets.only(right: 20, top: 10),
+                  child: GestureDetector(
+                    onTap: () => {},
+                    child: Image.asset('images/info_btn.png', height: 35),
+                  ),
+                ),
+              ),
               //Title
-              SizedBox(height: 20, width: double.infinity),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   "Input Speech Parameters",
                   style: GoogleFonts.sora(
@@ -131,17 +141,18 @@ class _ChallengeState extends State<Challenge> {
               // Input Parameters Box
               Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 15,
+                  vertical: 10,
                   horizontal: 10,
                 ),
-                height: 250,
-                width: 300,
-                margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                height: 220,
+                width: 350,
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 decoration: BoxDecoration(
                   color: lightviolet,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.black, width: 2),
+                  border: Border.all(color: primary, width: 1),
                 ),
+
                 // inside the box
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,9 +161,7 @@ class _ChallengeState extends State<Challenge> {
                     //Type of Audience
                     Container(
                       height: 25,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
+
                       margin: const EdgeInsets.only(
                         left: 20,
                         right: 20,
@@ -162,19 +171,17 @@ class _ChallengeState extends State<Challenge> {
                         "Type of Audience",
                         style: GoogleFonts.sora(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           decoration: TextDecoration.none,
                         ),
                       ),
                     ),
                     //Text Field: //Type of Audience
                     Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 5,
-                      ),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       child: SizedBox(
-                        width: 250,
+                        width: 300,
                         height: 30,
                         child: TextField(
                           decoration: InputDecoration(
@@ -191,9 +198,7 @@ class _ChallengeState extends State<Challenge> {
                     //Speech Topic or Concept
                     Container(
                       height: 25,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
+
                       margin: const EdgeInsets.only(
                         left: 20,
                         right: 20,
@@ -203,20 +208,17 @@ class _ChallengeState extends State<Challenge> {
                         "Speech Topic or Concept",
                         style: GoogleFonts.sora(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           decoration: TextDecoration.none,
                         ),
                       ),
                     ),
                     //Text Field: Speech Topic or Concept
                     Container(
-                      margin: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        top: 5,
-                      ),
+                      margin: const EdgeInsets.only(left: 20, right: 20),
                       child: SizedBox(
-                        width: 250,
+                        width: 300,
                         height: 30,
                         child: TextField(
                           decoration: InputDecoration(
@@ -233,27 +235,23 @@ class _ChallengeState extends State<Challenge> {
                     // Delivery Goal
                     Container(
                       height: 25,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
+
                       margin: EdgeInsets.only(left: 20, top: 10),
                       child: Text(
                         "Delivery Goal",
                         style: GoogleFonts.sora(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           decoration: TextDecoration.none,
                         ),
                       ),
                     ),
                     //Text Field: Delivery Goal
                     Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 5,
-                      ),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       child: SizedBox(
-                        width: 250,
+                        width: 300,
                         height: 30,
                         child: TextField(
                           decoration: InputDecoration(
@@ -263,6 +261,148 @@ class _ChallengeState extends State<Challenge> {
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 10.0,
                             ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                          left: 20,
+                          top: 10,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          "Speech Script",
+                          style: GoogleFonts.sora(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            buildImageButton(
+                              'images/script_btn.png',
+                              'images/script_btn_hltd.png',
+                              'script',
+                            ),
+
+                            Text(
+                              "Upload my",
+                              style: GoogleFonts.sora(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "script",
+                              style: GoogleFonts.sora(
+                                fontSize: 10,
+                                height: 1,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildImageButton(
+                              'images/ai_btn.png',
+                              'images/ai_btn_hltd.png',
+                              'ai',
+                            ),
+
+                            Text(
+                              "Generate from",
+                              style: GoogleFonts.sora(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "AI",
+                              style: GoogleFonts.sora(
+                                fontSize: 10,
+                                height: 1,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            buildImageButton(
+                              'images/impromptu_btn.png',
+                              'images/impromptu_btn_hltd.png',
+                              'impromptu',
+                            ),
+
+                            Text(
+                              "Impromptu/No",
+                              style: GoogleFonts.sora(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "Script",
+                              style: GoogleFonts.sora(
+                                fontSize: 10,
+                                height: 1,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 250,
+                      height: 45,
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UploadScript(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 20,
+                          ),
+                          side: const BorderSide(color: Colors.black, width: 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          backgroundColor: details,
+                        ),
+                        child: Text(
+                          "START CHALLENGE",
+                          style: GoogleFonts.sora(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
                           ),
                         ),
                       ),
