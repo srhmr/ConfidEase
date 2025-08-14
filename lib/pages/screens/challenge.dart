@@ -48,7 +48,7 @@ class _ChallengeState extends State<Challenge> {
           // Title Bar
           Container(
             height: screenHeight * 0.2,
-            padding: EdgeInsets.all(screenWidth * 0.04),
+            padding: EdgeInsets.all(screenWidth * 0.02),
             color: tertiary,
             child: Row(
               children: [
@@ -59,7 +59,6 @@ class _ChallengeState extends State<Challenge> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                SizedBox(width: screenWidth * 0.04),
                 Expanded(
                   child: FittedBox(
                     alignment: Alignment.centerLeft,
@@ -129,7 +128,7 @@ class _ChallengeState extends State<Challenge> {
                     padding: EdgeInsets.all(screenWidth * 0.03),
                     decoration: BoxDecoration(
                       color: lightviolet,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: primary, width: 1),
                     ),
                     child: Column(
@@ -159,7 +158,7 @@ class _ChallengeState extends State<Challenge> {
                       ),
                       SizedBox(height: screenHeight * 0.01),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildScriptOption(
                             'images/script_btn.png',
@@ -168,7 +167,7 @@ class _ChallengeState extends State<Challenge> {
                             "Upload my",
                             "script",
                             fontScale,
-                            screenHeight,
+                            screenHeight * 1.2,
                           ),
                           buildScriptOption(
                             'images/ai_btn.png',
@@ -177,7 +176,7 @@ class _ChallengeState extends State<Challenge> {
                             "Generate from",
                             "AI",
                             fontScale,
-                            screenHeight,
+                            screenHeight * 1.2,
                           ),
                           buildScriptOption(
                             'images/impromptu_btn.png',
@@ -186,7 +185,7 @@ class _ChallengeState extends State<Challenge> {
                             "Impromptu/No",
                             "Script",
                             fontScale,
-                            screenHeight,
+                            screenHeight * 1.2,
                           ),
                         ],
                       ),
