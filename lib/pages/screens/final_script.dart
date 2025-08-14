@@ -113,7 +113,7 @@ class _FinalScriptState extends State<FinalScript> {
                 backgroundColor: details,
               ),
               child: Text(
-                "ANALYZE",
+                "START RECORDING",
                 style: GoogleFonts.sora(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
