@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:confidease/pages/screens/final_script.dart';
 
 class ImproveScript extends StatefulWidget {
   const ImproveScript({super.key});
@@ -108,10 +109,10 @@ class _ImproveScriptState extends State<ImproveScript> {
                 height: screenHeight * 0.06,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ImproveScript()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FinalScript()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(

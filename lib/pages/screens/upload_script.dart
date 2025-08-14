@@ -21,6 +21,7 @@ class _UploadScriptState extends State<UploadScript> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 120,
         backgroundColor: primary,
         title: FittedBox(
           fit: BoxFit.scaleDown,
@@ -34,34 +35,46 @@ class _UploadScriptState extends State<UploadScript> {
             ),
           ),
         ),
+        elevation: 0, // remove default shadow
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0), // height of the border
+          child: Container(
+            color: Colors.black, // border color
+            height: 1.0, // thickness
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(screenWidth * 0.04),
         child: Column(
           children: [
-            Expanded(
-              child: ScrollbarTheme(
-                data: ScrollbarThemeData(
-                  thumbColor: WidgetStateProperty.all(secondary),
-                  thickness: WidgetStateProperty.all(6),
-                  radius: const Radius.circular(8),
-                ),
-                child: Scrollbar(
-                  controller: _scrollController,
-                  thumbVisibility: true,
-                  child: TextField(
-                    controller: _scriptController,
-                    scrollController: _scrollController,
-                    maxLines: null,
-                    expands: true,
-                    keyboardType: TextInputType.multiline,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+            SizedBox(
+              width: screenWidth * 0.99, // responsive width
+              height: screenHeight * 0.60, // responsive height
+              child: Expanded(
+                child: ScrollbarTheme(
+                  data: ScrollbarThemeData(
+                    thumbColor: WidgetStateProperty.all(secondary),
+                    thickness: WidgetStateProperty.all(6),
+                    radius: const Radius.circular(8),
+                  ),
+                  child: Scrollbar(
+                    controller: _scrollController,
+                    thumbVisibility: true,
+                    child: TextField(
+                      controller: _scriptController,
+                      scrollController: _scrollController,
+                      maxLines: null,
+                      expands: true,
+                      keyboardType: TextInputType.multiline,
+                      textAlignVertical: TextAlignVertical.top,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        alignLabelWithHint: true,
+                        hintText: 'Type or paste your script...',
                       ),
-                      alignLabelWithHint: true,
-                      hintText: 'Type or paste your script...',
                     ),
                   ),
                 ),
