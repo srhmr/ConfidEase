@@ -16,28 +16,33 @@ class _UploadScriptState extends State<UploadScript> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
         backgroundColor: primary,
-        title: Text(
-          'Here\'s your\nuploaded script.',
-          style: GoogleFonts.sora(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Here's your\nuploaded script.",
+            style: GoogleFonts.sora(
+              fontSize: screenWidth * 0.06, // responsive font
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.04),
         child: Column(
           children: [
-            SizedBox(
-              height: 500,
+            Expanded(
               child: ScrollbarTheme(
                 data: ScrollbarThemeData(
-                  thumbColor: WidgetStateProperty.all(primary),
+                  thumbColor: WidgetStateProperty.all(secondary),
                   thickness: WidgetStateProperty.all(6),
                   radius: const Radius.circular(8),
                 ),
@@ -46,13 +51,15 @@ class _UploadScriptState extends State<UploadScript> {
                   thumbVisibility: true,
                   child: TextField(
                     controller: _scriptController,
-                    scrollController: _scrollController, // attach here
+                    scrollController: _scrollController,
                     maxLines: null,
-                    expands: true, // makes it fill the height
+                    expands: true,
                     keyboardType: TextInputType.multiline,
                     textAlignVertical: TextAlignVertical.top,
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
                       alignLabelWithHint: true,
                       hintText: 'Type or paste your script...',
                     ),
@@ -60,12 +67,10 @@ class _UploadScriptState extends State<UploadScript> {
                 ),
               ),
             ),
-
-            SizedBox(height: 20),
-            Container(
-              width: 250,
-              height: 45,
-              margin: const EdgeInsets.only(top: 20),
+            SizedBox(height: screenHeight * 0.02),
+            SizedBox(
+              width: screenWidth * 0.6,
+              height: screenHeight * 0.06,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -74,9 +79,9 @@ class _UploadScriptState extends State<UploadScript> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 20,
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.015,
+                    horizontal: screenWidth * 0.05,
                   ),
                   side: const BorderSide(color: Colors.black, width: 1),
                   shape: RoundedRectangleBorder(
@@ -89,7 +94,7 @@ class _UploadScriptState extends State<UploadScript> {
                   style: GoogleFonts.sora(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
-                    fontSize: 15,
+                    fontSize: screenWidth * 0.04,
                   ),
                 ),
               ),
