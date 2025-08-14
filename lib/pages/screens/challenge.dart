@@ -310,6 +310,7 @@ class _ChallengeState extends State<Challenge> {
                               'images/script_btn.png',
                               'images/script_btn_hltd.png',
                               'script',
+                              screenHeight * 0.1,
                             ),
 
                             Text(
@@ -336,6 +337,7 @@ class _ChallengeState extends State<Challenge> {
                               'images/ai_btn.png',
                               'images/ai_btn_hltd.png',
                               'ai',
+                              screenHeight * 0.1,
                             ),
 
                             Text(
@@ -361,6 +363,7 @@ class _ChallengeState extends State<Challenge> {
                               'images/impromptu_btn.png',
                               'images/impromptu_btn_hltd.png',
                               'impromptu',
+                              screenHeight * 0.1,
                             ),
 
                             Text(
