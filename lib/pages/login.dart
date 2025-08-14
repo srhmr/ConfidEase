@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -20,34 +17,32 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() async {
-  try {
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
 
-    // If login successful → redirect to dashboard
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MainNavigator(
-          name: credential.user?.email ?? "User",
+      // If login successful → redirect to dashboard
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              MainNavigator(name: credential.user?.email ?? "User"),
         ),
-      ),
-    );
-  } on FirebaseAuthException catch (e) {
-    String message = "Login failed";
-    if (e.code == 'user-not-found') {
-      message = "No user found for that email.";
-    } else if (e.code == 'wrong-password') {
-      message = "Wrong password provided.";
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = "Login failed";
+      if (e.code == 'user-not-found') {
+        message = "No user found for that email.";
+      } else if (e.code == 'wrong-password') {
+        message = "Wrong password provided.";
+      }
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
