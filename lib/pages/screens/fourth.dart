@@ -14,7 +14,7 @@ class _FourthScreenPageState extends State<FourthScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: secondary,
+      color: const Color.fromARGB(255, 243, 243, 180),
       
     );
   }

@@ -28,7 +28,7 @@ class _MainNavigatorState extends State<MainNavigator> {
 
       Dashboard(name: widget.name),  //dashboard
       learnersPage.Learners(),   // Learners corner
-      challengePage.Challenge(), // Challenge page
+      challengePage.Challenge(), // Challenge
       FourthScreen(),  //progress
       Profile(name: widget.name),  //profile settings
     ];
