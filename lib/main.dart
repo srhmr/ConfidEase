@@ -9,7 +9,7 @@ import 'package:confidease/pages/signup.dart';
 import 'package:confidease/navigator.dart';
 
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform, // <-- use config

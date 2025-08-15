@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'confidease-c5f7e.firebasestorage.app',
     measurementId: 'G-S13114H9QH',
   );
+
 }

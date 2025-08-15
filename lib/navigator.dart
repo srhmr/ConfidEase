@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 //screens
 import 'pages/screens/dashboard.dart';
-import 'pages/screens/second.dart';
-import 'pages/screens/challenge.dart'; ///challenge
+import 'package:confidease/pages/screens/learners.dart' as learnersPage;
+import 'package:confidease/pages/screens/challenge.dart' as challengePage; ///challenge
 import 'pages/screens/fourth.dart';
 import 'pages/screens/profile.dart';
 
@@ -25,16 +25,17 @@ class _MainNavigatorState extends State<MainNavigator> {
   void initState() {
     super.initState();
     _screens = [
+
       Dashboard(name: widget.name),  //dashboard
-      SecondScreen(),  //learners corner
-      Challenge(),  //challenge
+      learnersPage.Learners(),   // Learners corner
+      challengePage.Challenge(), // Challenge page
       FourthScreen(),  //progress
       Profile(name: widget.name),  //profile settings
     ];
   }
 
   
-  void _onItemTapped(int index) {
+  void_onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
