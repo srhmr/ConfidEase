@@ -41,12 +41,12 @@ class _SignupState extends State<SignupPage> {
         backgroundColor: tertiary,
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: Container(
             decoration: BoxDecoration(
               color: secondary,
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF000000), width: 1),
+              //border: Border.all(color: const Color(0xFF000000), width: 1),
             ),
             child: IconButton(
               icon: const Icon(

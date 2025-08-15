@@ -18,7 +18,7 @@ class CustomNavigationBar extends StatelessWidget {
       TablerIcons.layout_dashboard,
       TablerIcons.book_2,
       TablerIcons.target_arrow,
-      TablerIcons.chart_bar,
+      TablerIcons.chart_bar, //progress
       TablerIcons.settings,
     ];
 

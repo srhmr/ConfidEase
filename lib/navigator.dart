@@ -2,7 +2,7 @@ import 'package:confidease/pages/custom_navbar.dart';
 import 'package:flutter/material.dart';
 
 //screens
-import 'pages/screens/first.dart';
+import 'pages/screens/dashboard.dart';
 import 'pages/screens/second.dart';
 import 'pages/screens/challenge.dart'; ///challenge
 import 'pages/screens/fourth.dart';
@@ -25,7 +25,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   void initState() {
     super.initState();
     _screens = [
-      FirstScreen(name: widget.name),  //dashboard
+      Dashboard(name: widget.name),  //dashboard
       SecondScreen(),  //learners corner
       Challenge(),  //challenge
       FourthScreen(),  //progress

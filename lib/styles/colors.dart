@@ -11,3 +11,10 @@ const Color lightgrey = Color(0xFFD0D0E8);
 
 const Color title = Color(0xFF808080);
 const Color logout = Color(0xFFFF0000);
+
+const Color profile = Color(0xFF55565A);
+const Color savechanges = Color(0xFFE4E2DD);
+const Color field = Color(0xFF5F5F5F);
+const Color cancel = Color(0xFF808080);
+
+const Color circle = Color(0xFFFFF6C8);

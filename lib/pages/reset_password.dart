@@ -26,12 +26,12 @@ class ResetPasswordPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: details,
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF000000), width: 1),
+              //border: Border.all(color: const Color(0xFF000000), width: 1),
             ),
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back,
-                color: Color(0xFF000000),
+                color: quartenary,
                 size: 20,
               ),
               onPressed: () {
