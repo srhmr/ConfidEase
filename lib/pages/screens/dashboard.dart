@@ -83,6 +83,7 @@ class _DashboardState extends State<Dashboard> {
 
                   return CircleAvatar(
                     radius: 35,
+                    
                     backgroundColor: secondary,
                     backgroundImage: NetworkImage(
                       userData?['avatar'] ??
@@ -109,7 +110,7 @@ class _DashboardState extends State<Dashboard> {
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(
-              margin: EdgeInsets.only(top: 120, bottom: 0),
+              margin: EdgeInsets.only(top: 110, bottom: 0),
               decoration: BoxDecoration(
                 color: quartenary,
                 borderRadius: BorderRadius.only(
@@ -118,9 +119,9 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: dark,
                     blurRadius: 10,
-                    offset: Offset(0, -5),
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),

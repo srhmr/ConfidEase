@@ -4,6 +4,7 @@ import 'package:confidease/pages/delete_profile.dart';
 import 'package:confidease/pages/edit_profile.dart';
 import 'package:confidease/pages/faqs.dart';
 import 'package:confidease/pages/landing.dart';
+import 'package:confidease/pages/report.dart';
 import 'package:confidease/pages/set_reminder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _ProfileState extends State<Profile> {
             //textAlign: TextAlign.center,
             style: GoogleFonts.sora(
               fontWeight: FontWeight.w600,
-              fontSize: 25,
+              fontSize: 20,
               color: quartenary,
             ),
           ),
@@ -362,6 +363,10 @@ class _ProfileState extends State<Profile> {
               trailing: Image.asset('images/icons/chevron.png', height: 30),
               onTap: () {
                 //navigate
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Report()),
+                );
               },
             ),
             SizedBox(height: 20),

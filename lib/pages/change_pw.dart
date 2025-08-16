@@ -80,125 +80,128 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: tertiary,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            decoration: BoxDecoration(color: details, shape: BoxShape.circle),
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: quartenary, size: 20),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: details,
+          elevation: 0,
+          leading: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              decoration: BoxDecoration(color: tertiary, shape: BoxShape.circle),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: dark, size: 20),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: Text(
+            '',
+            style: GoogleFonts.sora(
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: quartenary,
             ),
           ),
         ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: Text(
-          '',
-          style: GoogleFonts.sora(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-            color: quartenary,
-          ),
-        ),
-      ),
-
-      //body
-      backgroundColor: tertiary,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 40, left: 60),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 30),
-                Text(
-                  'Change Password',
-                  style: GoogleFonts.sora(
-                    fontSize: 27, 
-                    fontWeight: FontWeight.w700, 
-                    color: details, 
+      
+        //body
+        backgroundColor: tertiary,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40, left: 60),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 30),
+                  Text(
+                    'Change Password',
+                    style: GoogleFonts.sora(
+                      fontSize: 27, 
+                      fontWeight: FontWeight.w700, 
+                      color: details, 
+                    ),
                   ),
-                ),
-                
-                SizedBox(height: 30),
-
-                _buildLabel('Current Password'),
-                _buildPasswordField(
-                  controller: currentPasswordController,
-                  show: _showCurrent,
-                  toggleShow: () =>
-                      setState(() => _showCurrent = !_showCurrent),
-                ),
-                _buildLabel('New Password'),
-                _buildPasswordField(
-                  controller: newPasswordController,
-                  show: _showNew,
-                  toggleShow: () =>
-                      setState(() => _showCurrent = !_showCurrent),
-                ),
-                _buildLabel('Confirm New Password'),
-                _buildPasswordField(
-                  controller: confirmPasswordController,
-                  show: _showConfirm,
-                  toggleShow: () =>
-                      setState(() => _showCurrent = !_showCurrent),
-                ),
-                const SizedBox(height: 30),
-                // Save button
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: SizedBox(
-                    width: 250,
-                    height: 45,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle password change logic here
-                        String current = currentPasswordController.text;
-                        String newPass = newPasswordController.text;
-                        String confirm = confirmPasswordController.text;
-
-                        if (newPass != confirm) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('New passwords do not match'),
-                            ),
-                          );
-                        } else {
-                          // Call API or update password
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Password changed successfully!'),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: details,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                  
+                  SizedBox(height: 30),
+      
+                  _buildLabel('Current Password'),
+                  _buildPasswordField(
+                    controller: currentPasswordController,
+                    show: _showCurrent,
+                    toggleShow: () =>
+                        setState(() => _showCurrent = !_showCurrent),
+                  ),
+                  _buildLabel('New Password'),
+                  _buildPasswordField(
+                    controller: newPasswordController,
+                    show: _showNew,
+                    toggleShow: () =>
+                        setState(() => _showCurrent = !_showCurrent),
+                  ),
+                  _buildLabel('Confirm New Password'),
+                  _buildPasswordField(
+                    controller: confirmPasswordController,
+                    show: _showConfirm,
+                    toggleShow: () =>
+                        setState(() => _showCurrent = !_showCurrent),
+                  ),
+                  const SizedBox(height: 30),
+                  // Save button
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: SizedBox(
+                      width: 250,
+                      height: 45,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Handle password change logic here
+                          String current = currentPasswordController.text;
+                          String newPass = newPasswordController.text;
+                          String confirm = confirmPasswordController.text;
+      
+                          if (newPass != confirm) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('New passwords do not match'),
+                              ),
+                            );
+                          } else {
+                            // Call API or update password
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Password changed successfully!'),
+                              ),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: details,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: BorderSide(color: dark, width: 1),
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Update Password',
-                        style: GoogleFonts.sora(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: quartenary,
+                        child: Text(
+                          'Update Password',
+                          style: GoogleFonts.sora(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: quartenary,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
