@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:confidease/services/email_services.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -333,23 +334,65 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   onPressed: () async {
                     final uid = FirebaseAuth.instance.currentUser!.uid;
-                    await FirebaseFirestore.instance
+                    final user = FirebaseAuth.instance.currentUser!;
+
+                    final userDoc = await FirebaseFirestore.instance
                         .collection('user')
                         .doc(uid)
-                        .update({
-                          'user_fname': _firstNameController.text.trim(),
-                          'user_lname': _lastNameController.text.trim(),
-                          'email': _emailController.text.trim(),
-                          'user_bday': _dateController.text.trim(),
-                          'avatar': selectedAvatar,
-                        });
+                        .get();
+
+                    final oldEmail = userDoc['email'];
+                    final newEmail = _emailController.text.trim();
+
+                    // 🔹 Step 1: If email is changed
+                    if (newEmail != oldEmail) {
+                      try {
+                        // Ask Firebase to send a verification link before updating
+                        await user.verifyBeforeUpdateEmail(newEmail);
+
+                        // Optional: send a friendly email using Brevo
+                        await sendNewEmailUp(
+                          newEmail,
+                          _firstNameController.text.trim(),
+                          newEmail,
+                        );
+
+                        // Show info to the user
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "We’ve sent a verification link to $newEmail. "
+                              "Please verify to complete the update.",
+                            ),
+                          ),
+                        );
+
+                        return; // 🚨 stop here until the user verifies via email
+                      } catch (e) {
+                        print("❌ Failed to start email update: $e");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Error: Unable to update email.")),
+                        );
+                        return;
+                      }
+                    }
+
+                    // 🔹 Step 2: Update Firestore profile fields (if email didn't change, or later after verification)
+                    await FirebaseFirestore.instance.collection('user').doc(uid).update({
+                      'user_fname': _firstNameController.text.trim(),
+                      'user_lname': _lastNameController.text.trim(),
+                      'email': newEmail,
+                      'user_bday': _dateController.text.trim(),
+                      'avatar': selectedAvatar,
+                    });
+
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Profile updated successfully!'),
-                      ),
+                      const SnackBar(content: Text('Profile updated successfully!')),
                     );
+
                     Navigator.pop(context);
                   },
+
 
                   child: Text(
                     'SAVE CHANGES',

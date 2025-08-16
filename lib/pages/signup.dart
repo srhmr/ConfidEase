@@ -4,6 +4,8 @@ import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:confidease/services/email_services.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -217,6 +219,8 @@ class _SignupState extends State<SignupPage> {
                         'level': 1,
                         'user_bday': _dateController.text.trim(),
                       });
+
+                      await sendWelcomeEmail(email, firstName);
 
 
                       ScaffoldMessenger.of(context).showSnackBar(
