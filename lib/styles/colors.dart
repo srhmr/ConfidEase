@@ -9,6 +9,8 @@ const Color lightviolet = Color(0xffD0D0E8);
 const Color lightgrey = Color(0xffC6C6C6);
 const Color dark = Color(0xFF000000);
 const Color title = Color(0xFF808080);
+
+
 const Color logout = Color(0xFFFF0000);
 
 const Color profile = Color(0xFF55565A);
@@ -17,3 +19,9 @@ const Color field = Color(0xFF5F5F5F);
 const Color cancel = Color(0xFF808080);
 
 const Color circle = Color(0xFFFFF6C8);
+
+
+const Color loggedout = Color(0xFFFF0000);
+
+const Color grey = Color(0xFF9E9E9E);
+

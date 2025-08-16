@@ -10,11 +10,15 @@ class LoginPage extends StatefulWidget {
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
 }
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  bool _showPassword = false;
+
 
   void _login() async {
     try {
@@ -44,7 +48,8 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  @override
+ 
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -61,11 +66,7 @@ class _LoginPageState extends State<LoginPage> {
               //border: Border.all(color: const Color(0xFF000000), width: 1),
             ),
             child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: quartenary,
-                size: 20,
-              ),
+              icon: const Icon(Icons.arrow_back, color: quartenary, size: 20),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -172,6 +173,17 @@ class _LoginPageState extends State<LoginPage> {
                     border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: quartenary,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _showPassword ? Icons.visibility : Icons.visibility_off,
+                        size: 18,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 12.0,
                     ),

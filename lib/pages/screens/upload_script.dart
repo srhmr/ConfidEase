@@ -35,7 +35,23 @@ class _UploadScriptState extends State<UploadScript> {
             ),
           ),
         ),
-        elevation: 0, // remove default shadow
+        elevation: 0, 
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: details,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: quartenary, size: 20),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          
+        ),// remove default shadow
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(1.0), // height of the border
           child: Container(
