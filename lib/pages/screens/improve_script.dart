@@ -126,7 +126,7 @@ class _ImproveScriptState extends State<ImproveScript> {
                     backgroundColor: details,
                   ),
                   child: Text(
-                    "SURE, LET\'S USE THIS!",
+                    "SURE, LET'S USE THIS!",
                     style: GoogleFonts.sora(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
