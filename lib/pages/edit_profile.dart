@@ -58,8 +58,9 @@ class _EditProfileState extends State<EditProfile> {
         _firstNameController.text = data['user_fname'] ?? '';
         _lastNameController.text = data['user_lname'] ?? '';
         _dateController.text = data['user_bday'] ?? '';
-        selectedAvatar = data['avatar'] ?? 
-        'https://i.pinimg.com/736x/20/66/99/206699b44b5cbe16450c19da611d73c7.jpg';
+        selectedAvatar =
+            data['avatar'] ??
+            'https://i.pinimg.com/736x/20/66/99/206699b44b5cbe16450c19da611d73c7.jpg';
       });
     }
   }
@@ -157,36 +158,40 @@ class _EditProfileState extends State<EditProfile> {
                     GestureDetector(
                       onTap: () {
                         showModalBottomSheet(
-                          context: context, 
+                          context: context,
                           builder: (context) {
                             return GridView.builder(
                               padding: const EdgeInsets.all(16),
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                mainAxisSpacing: 10,
-                                crossAxisSpacing: 10,
-                                ),
-                                itemCount: avatarList.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      final uid = FirebaseAuth.instance.currentUser!.uid;
-                                      setState(() {
-                                        selectedAvatar = avatarList[index];
-                                      });
-                                      await FirebaseFirestore.instance
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
+                                  ),
+                              itemCount: avatarList.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    final uid =
+                                        FirebaseAuth.instance.currentUser!.uid;
+                                    setState(() {
+                                      selectedAvatar = avatarList[index];
+                                    });
+                                    await FirebaseFirestore.instance
                                         .collection('user')
                                         .doc(uid)
                                         .update({'avatar': selectedAvatar});
-                                      Navigator.pop(context);
-                                    },
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(avatarList[index]),
-                                      radius: 40,
+                                    Navigator.pop(context);
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      avatarList[index],
                                     ),
-                                  );
-                                },
-                              );
+                                    radius: 40,
+                                  ),
+                                );
+                              },
+                            );
                           },
                         );
                       },
@@ -208,7 +213,7 @@ class _EditProfileState extends State<EditProfile> {
                             fit: BoxFit.cover,
                             image: NetworkImage(
                               selectedAvatar ??
-                              'https://i.pinimg.com/736x/20/66/99/206699b44b5cbe16450c19da611d73c7.jpg',
+                                  'https://i.pinimg.com/736x/20/66/99/206699b44b5cbe16450c19da611d73c7.jpg',
                             ),
                           ),
                         ),
@@ -332,8 +337,85 @@ class _EditProfileState extends State<EditProfile> {
                     backgroundColor: details,
                   ),
                   onPressed: () async {
-                    final uid = FirebaseAuth.instance.currentUser!.uid;
-                    await FirebaseFirestore.instance
+                    final user = FirebaseAuth.instance.currentUser!;
+                    final uid = user.uid;
+
+                    final oldEmail = user.email;
+                    final newEmail = _emailController.text.trim();
+
+                    //To check if the email change
+                    if (newEmail != oldEmail) {
+                      //Popup for reauthentication
+                      showDialog(
+                        context: context, 
+                        builder: (context) {
+                          final TextEditingController _oldEmailController = TextEditingController();
+                          final TextEditingController _passwordController = TextEditingController();
+
+                          return AlertDialog(
+                            title: Text('Reauthenticate'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextField(
+                                  controller: _oldEmailController,
+                                  decoration: InputDecoration(labelText: 'Old Email'),
+                                ),
+                                TextField(
+                                  controller: _passwordController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    labelText: 'Password'
+                                  ),
+                                )
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () async {
+                                  try {
+                                    //Reauthenticate user
+                                    AuthCredential credential = EmailAuthProvider.credential(
+                                      email: _oldEmailController.text.trim(),
+                                      password: _passwordController.text.trim(),
+                                    );
+
+                                    await user.reauthenticateWithCredential(credential);
+
+                                    //Update email in Firebase Auth
+                                    await user.verifyBeforeUpdateEmail(newEmail);
+
+                                    //Update Firestore document
+                                    await FirebaseFirestore.instance
+                                    .collection('user')
+                                    .doc(uid)
+                                    .update({
+                                      'user_fname': _firstNameController.text.trim(),
+                                      'user_lname': _lastNameController.text.trim(),
+                                      'email': newEmail,
+                                      'user_bday': _dateController.text.trim(),
+                                      'avatar': selectedAvatar,
+                                    });
+
+                                    Navigator.pop(context); 
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Email updated successfully!')),
+                                    );
+                                    Navigator.pop(context); //back to previous page
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Reauthentication failed: $e')),
+                                    );
+                                  }
+                                },
+                                child: Text('Confirm'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      await FirebaseFirestore.instance
                         .collection('user')
                         .doc(uid)
                         .update({
@@ -345,12 +427,12 @@ class _EditProfileState extends State<EditProfile> {
                         });
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Profile updated successfully!'),
-                      ),
+                        content: Text('Profile updated successfully!')),
                     );
                     Navigator.pop(context);
-                  },
-
+                  }
+                },
+                    
                   child: Text(
                     'SAVE CHANGES',
                     style: GoogleFonts.sora(
