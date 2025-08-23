@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:confidease/services/email_services.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -343,53 +344,51 @@ class _EditProfileState extends State<EditProfile> {
                     final oldEmail = user.email;
                     final newEmail = _emailController.text.trim();
 
-                    //To check if the email change
+                    // Check if email changed
                     if (newEmail != oldEmail) {
-                      //Popup for reauthentication
                       showDialog(
-                        context: context, 
+                        context: context,
                         builder: (context) {
-                          final TextEditingController _oldEmailController = TextEditingController();
-                          final TextEditingController _passwordController = TextEditingController();
+                          final TextEditingController oldEmailController = TextEditingController();
+                          final TextEditingController passwordController = TextEditingController();
 
                           return AlertDialog(
-                            title: Text('Reauthenticate'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextField(
-                                  controller: _oldEmailController,
-                                  decoration: InputDecoration(labelText: 'Old Email'),
-                                ),
-                                TextField(
-                                  controller: _passwordController,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password'
+                            title: const Text("Reauthenticate"),
+                            content: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextField(
+                                    controller: oldEmailController,
+                                    decoration: const InputDecoration(labelText: "Old Email"),
                                   ),
-                                )
-                              ],
+                                  TextField(
+                                    controller: passwordController,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(labelText: "Password"),
+                                  ),
+                                ],
+                              ),
                             ),
                             actions: [
                               TextButton(
                                 onPressed: () async {
                                   try {
-                                    //Reauthenticate user
-                                    AuthCredential credential = EmailAuthProvider.credential(
-                                      email: _oldEmailController.text.trim(),
-                                      password: _passwordController.text.trim(),
+                                    // Reauthenticate
+                                    final credential = EmailAuthProvider.credential(
+                                      email: oldEmailController.text.trim(),
+                                      password: passwordController.text.trim(),
                                     );
-
                                     await user.reauthenticateWithCredential(credential);
 
-                                    //Update email in Firebase Auth
+                                    // ✅ Update email in Firebase Auth (new API)
                                     await user.verifyBeforeUpdateEmail(newEmail);
 
-                                    //Update Firestore document
+                                    // ✅ Update Firestore only after successful call
                                     await FirebaseFirestore.instance
-                                    .collection('user')
-                                    .doc(uid)
-                                    .update({
+                                        .collection('user')
+                                        .doc(uid)
+                                        .update({
                                       'user_fname': _firstNameController.text.trim(),
                                       'user_lname': _lastNameController.text.trim(),
                                       'email': newEmail,
@@ -397,42 +396,47 @@ class _EditProfileState extends State<EditProfile> {
                                       'avatar': selectedAvatar,
                                     });
 
-                                    Navigator.pop(context); 
+                                    if (!context.mounted) return;
+                                    Navigator.pop(context); // close dialog
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Email updated successfully!')),
+                                      SnackBar(
+                                        content: Text(
+                                          "Verification link sent to $newEmail. Please verify to complete update.",
+                                        ),
+                                      ),
                                     );
-                                    Navigator.pop(context); //back to previous page
+                                    Navigator.pop(context); // back to profile
                                   } catch (e) {
+                                    if (!context.mounted) return;
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Reauthentication failed: $e')),
+                                      SnackBar(content: Text("Reauthentication failed: $e")),
                                     );
                                   }
                                 },
-                                child: Text('Confirm'),
+                                child: const Text("Confirm"),
                               ),
                             ],
                           );
                         },
                       );
                     } else {
-                      await FirebaseFirestore.instance
-                        .collection('user')
-                        .doc(uid)
-                        .update({
-                          'user_fname': _firstNameController.text.trim(),
-                          'user_lname': _lastNameController.text.trim(),
-                          'email': _emailController.text.trim(),
-                          'user_bday': _dateController.text.trim(),
-                          'avatar': selectedAvatar,
-                        });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Profile updated successfully!')),
-                    );
-                    Navigator.pop(context);
-                  }
-                },
-                    
+                      // Normal update if email unchanged
+                      await FirebaseFirestore.instance.collection('user').doc(uid).update({
+                        'user_fname': _firstNameController.text.trim(),
+                        'user_lname': _lastNameController.text.trim(),
+                        'email': newEmail,
+                        'user_bday': _dateController.text.trim(),
+                        'avatar': selectedAvatar,
+                      });
+
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Profile updated successfully!')),
+                      );
+                      Navigator.pop(context);
+                    }
+                  },
+
                   child: Text(
                     'SAVE CHANGES',
                     style: GoogleFonts.sora(

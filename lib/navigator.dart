@@ -35,7 +35,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   }
 
   
-  void_onItemTapped(int index) {
+  void void_onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });

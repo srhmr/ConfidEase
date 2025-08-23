@@ -21,8 +21,8 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   // Password visibility toggles
   bool _showCurrent = false;
-  bool _showNew = false;
-  bool _showConfirm = false;
+  final bool _showNew = false;
+  final bool _showConfirm = false;
 
   Widget _buildLabel(String text) {
     return Container(
