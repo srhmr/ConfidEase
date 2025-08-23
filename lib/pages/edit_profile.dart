@@ -353,19 +353,51 @@ class _EditProfileState extends State<EditProfile> {
                           final TextEditingController passwordController = TextEditingController();
 
                           return AlertDialog(
-                            title: const Text("Reauthenticate"),
+                            title: Text("Reauthenticate"),
                             content: SingleChildScrollView(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  TextField(
-                                    controller: oldEmailController,
-                                    decoration: const InputDecoration(labelText: "Old Email"),
+                                  SizedBox(
+                                    height: 40,
+                                    width: 300,
+                                    child: TextField(
+                                      controller: oldEmailController,
+                                      decoration: InputDecoration(
+                                        labelText: "Old Email",
+                                        contentPadding: const EdgeInsets.only(left: 10),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(color: field, width: 2),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(color: field, width: 2),
+                                        ),
+                                        filled: true,
+                                        fillColor: quartenary,
+                                      ),
+                                    ),
                                   ),
-                                  TextField(
-                                    controller: passwordController,
-                                    obscureText: true,
-                                    decoration: const InputDecoration(labelText: "Password"),
+                                  SizedBox(height: 15),
+
+                                  SizedBox(
+                                    height: 40,
+                                    width: 300,
+                                    child: TextField(
+                                      controller: passwordController,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        labelText: "Password",
+                                        contentPadding: const EdgeInsets.only(left: 10),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(color: field, width: 2),
+                                        ),
+                                        filled: true,
+                                        fillColor: quartenary,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
