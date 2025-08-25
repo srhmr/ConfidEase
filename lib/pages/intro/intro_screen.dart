@@ -1,5 +1,7 @@
+import 'package:confidease/pages/landing.dart';
 import 'package:confidease/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -14,19 +16,64 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final PageController _controller = PageController();
   bool isLastPage = false;
+  int currentPage = 0;
+
+  final List<String> images = [
+    'images/intro/first.png',
+    'images/intro/second.png',
+    'images/intro/third.png',
+    'images/intro/fourth.png',
+    'images/intro/fifth.png',
+  ];
+
+  final List<String> texts = [
+    "Refine your English public speaking skills with AI assistance",
+    "Learn more about public speaking and earn rewards through mini quizzes",
+    "Need help with your speech script? We got you covered!",
+    "Practice your speech delivery with a friendly AI!",
+    "Gain more confidence and experience for your next public speaking event!",
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: quartenary,
+        leading: currentPage > 0
+            ? IconButton(
+                icon: Icon(TablerIcons.chevron_left),
+                onPressed: () {
+                  _controller.previousPage(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                },
+              )
+            : null,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LandingPage()),
+              );
+            },
+            child: Text(
+              'Skip',
+              style: GoogleFonts.sofiaSans(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: dark,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              quartenary, // white
-              Colors.white70, // extra white stop (to stretch white area)
-              secondary, // yellow
-            ],
-            stops: [0.0, 0.4, 1.0], // 30% white, then blend to yellow
+            colors: [quartenary, Colors.white70, secondary],
+            stops: [0.0, 0.3, 1.0],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -34,44 +81,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // PageView (images + text)
               Expanded(
-                child: PageView(
+                child: PageView.builder(
                   controller: _controller,
+                  itemCount: images.length,
                   onPageChanged: (index) {
-                    setState(() => isLastPage = index == 4); // 5th page
+                    setState(() {
+                      isLastPage = index == images.length - 1;
+                      currentPage = index;
+                    });
                   },
-                  children: [
-                    buildPage(
-                      'images/intro/first.png',
-                      "Refine your English public speaking skills with AI assistance",
-                    ),
-                    buildPage(
-                      'images/intro/second.png',
-                      "Learn more about public speaking and earn rewards through mini quizzes",
-                    ),
-                    buildPage(
-                      'images/intro/third.png',
-                      "Need help with your speech script? We got you covered!",
-                    ),
-                    buildPage(
-                      'images/intro/fourth.png',
-                      "Practice your speech delivery with a friendly AI!",
-                    ),
-                    buildPage(
-                      'images/intro/fifth.png',
-                      "Gain more confidence and experience for your next public speaking event!",
-                    ),
-                  ],
+                  itemBuilder: (context, index) {
+                    bool isCurrent = index == currentPage;
+                    return buildAnimatedPage(images[index], texts[index], isCurrent);
+                  },
                 ),
               ),
 
-              const SizedBox(height: 15),
+              SizedBox(height: 15),
 
-              // PAGE INDICATOR
               SmoothPageIndicator(
                 controller: _controller,
-                count: 5,
+                count: images.length,
                 effect: SlideEffect(
                   dotHeight: 10,
                   dotWidth: 10,
@@ -83,11 +114,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
 
-              const SizedBox(height: 50),
+              SizedBox(height: 50),
 
-              // Next and Start button
               Padding(
-                padding: const EdgeInsets.only(left: 230),
+                padding: EdgeInsets.only(left: 230),
                 child: SizedBox(
                   width: 100,
                   height: 40,
@@ -95,7 +125,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
                       foregroundColor: quartenary,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: EdgeInsets.symmetric(vertical: 8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -106,7 +136,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
                         color: quartenary,
-                      )
+                      ),
                     ),
                     onPressed: () async {
                       if (isLastPage) {
@@ -115,7 +145,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         Navigator.pushReplacementNamed(context, "/landing");
                       } else {
                         _controller.nextPage(
-                          duration: const Duration(milliseconds: 500),
+                          duration: Duration(milliseconds: 500),
                           curve: Curves.easeInOut,
                         );
                       }
@@ -124,7 +154,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: 30),
             ],
           ),
         ),
@@ -132,17 +162,33 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget buildPage(String asset, String text) {
+  Widget buildAnimatedPage(String asset, String text, bool isCurrent) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
+      padding: EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 90), // space above image
-          Image.asset(asset, height: 300),
+          SizedBox(height: 20),
 
-          const Spacer(), // pushes text lower
+          // Image with Fade + Scale Animation
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 500),
+            opacity: isCurrent ? 1.0 : 0.5,
+            child: AnimatedScale(
+              duration: Duration(milliseconds: 500),
+              scale: isCurrent ? 1.0 : 0.8,
+              child: AspectRatio(
+                aspectRatio: 1.0,
+                child: Image.asset(
+                  asset,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                ),
+              ),
+            ),
+          ),
 
+          Spacer(),
           Text(
             text,
             style: GoogleFonts.sora(
@@ -152,8 +198,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-
-          SizedBox(height: 30), // closer to dots
+          SizedBox(height: 30),
         ],
       ),
     );
