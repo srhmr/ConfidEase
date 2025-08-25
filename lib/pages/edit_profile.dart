@@ -445,7 +445,7 @@ class _EditProfileState extends State<EditProfile> {
                                     );
                                   }
                                 },
-                                child: const Text("Confirm"),
+                                child: Text("Confirm"),
                               ),
                             ],
                           );

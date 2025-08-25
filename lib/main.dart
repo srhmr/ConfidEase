@@ -1,3 +1,4 @@
+import 'package:confidease/pages/intro/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -26,8 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/landing',
+      initialRoute: '/OnBoardingScreen',
       routes: {
+        '/OnBoardingScreen' : (context) => const OnBoardingScreen(),
         '/landing': (context) => const LandingPage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
